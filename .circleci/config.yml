@@ -23,31 +23,28 @@ jobs:
   before_install:
     <<: *defaults
     steps:
-      - run:
-        - phpenv config-rm xdebug.ini
-        - composer self-update
-        - composer validate --no-check-all --ansi
-        - composer install
+      - checkout
+      - run: phpenv config-rm xdebug.ini
+      - run: composer self-update
+      - run: composer validate --no-check-all --ansi
+      - run: composer install
         # Exit build early if only documentation was changed in a Pull Request.
-        - source ${BLT_DIR}/scripts/circleci/exit_early
+      - run: source ${BLT_DIR}/scripts/circleci/exit_early
   install:
     <<: *defaults
     steps:
-      - run:
-        - source ${BLT_DIR}/scripts/circleci/setup_environment
-        - source ${BLT_DIR}/scripts/circleci/setup_project
+      - run: source ${BLT_DIR}/scripts/circleci/setup_environment
+      - run: source ${BLT_DIR}/scripts/circleci/setup_project
 
   script:
     <<: *defaults
     steps:
-      - run:
-        - source ${BLT_DIR}/scripts/circleci/run_tests
+      - run: source ${BLT_DIR}/scripts/circleci/run_tests
 
   deploy:
     <<: *defaults
     steps:
-      - run:
-        - source ${BLT_DIR}/scripts/circleci/deploys
+      - run: source ${BLT_DIR}/scripts/circleci/deploys
 
 workflows:
   version: 2
@@ -65,5 +62,6 @@ workflows:
             - script
           filters:
             branches:
-              only: master
-              only: develop
+              only:
+                - master
+                - develop
