@@ -5,7 +5,7 @@
 version: 2
 defaults: &defaults
   docker: # run the steps with Docker
-    - image: ubuntu:16.04
+    - image: cibuilds/drupal:latest
 
   environment:
     COMPOSER_BIN: ~/blt/vendor/bin
