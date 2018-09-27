@@ -11,6 +11,9 @@ defaults: &defaults
       - sudo apt-get update; USE_PRECOMPILE=true sudo -E circleci-install php 7.1.0
     php:
       version: 7.1.0
+  test:
+    override:
+      - php --version
   environment:
     COMPOSER_BIN: ~/repo/vendor/bin
     # BLT_DIR: ~/repo/vendor/acquia/blt
