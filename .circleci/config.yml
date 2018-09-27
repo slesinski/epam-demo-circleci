@@ -1,0 +1,69 @@
+# PHP CircleCI 2.0 configuration file
+#
+# Check https://circleci.com/docs/2.0/language-php/ for more details
+#
+version: 2
+defaults: &defaults
+  machine:
+    # Trusty
+    image: circleci/classic:201708-01
+    pre:
+      - sudo apt-get update; USE_PRECOMPILE=true sudo -E circleci-install php 7.1.0
+    php:
+      version: 7.1.0
+  environment:
+    COMPOSER_BIN: ~/repo/vendor/bin
+    # BLT_DIR: ~/repo/vendor/acquia/blt
+    BLT_DIR: ~/repo/.circleci/
+    BUILD_DIR: ~/repo
+
+  working_directory: ~/repo
+
+jobs:
+  before_install:
+    <<: *defaults
+    steps:
+      - run:
+        - phpenv config-rm xdebug.ini
+        - composer self-update
+        - composer validate --no-check-all --ansi
+        - composer install
+        # Exit build early if only documentation was changed in a Pull Request.
+        - source ${BLT_DIR}/scripts/circleci/exit_early
+  install:
+    <<: *defaults
+    steps:
+      - run:
+        - source ${BLT_DIR}/scripts/circleci/setup_environment
+        - source ${BLT_DIR}/scripts/circleci/setup_project
+
+  script:
+    <<: *defaults
+    steps:
+      - run:
+        - source ${BLT_DIR}/scripts/circleci/run_tests
+
+  deploy:
+    <<: *defaults
+    steps:
+      - run:
+        - source ${BLT_DIR}/scripts/circleci/deploys
+
+workflows:
+  version: 2
+  build_tests:
+    jobs:
+      - before_install
+      - install:
+          requires:
+            - before_install
+      - script:
+          requires:
+            - install
+      - deploy:
+          requires:
+            - script
+          filters:
+            branches:
+              only: master
+              only: develop

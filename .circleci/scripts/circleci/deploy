@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+set -ev
+
+if [ "$CIRCLE_BRANCH" ];
+then
+  blt artifact:deploy --commit-msg "Automated commit by Circle CI for Build ${CIRCLE_BUILD_NUM}" --branch "${CIRCLE_BRANCH}-build" --ignore-dirty --no-interaction --verbose
+elif [ "$CIRCLE_TAG" ]  ; then
+  blt artifact:deploy --commit-msg "Automated commit by Circle CI for Build ${CIRCLE_BUILD_NUM}" --branch "${CIRCLE_BRANCH}-build" --ignore-dirty --no-interaction --verbose
+fi
+
+set +v
