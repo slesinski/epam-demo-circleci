@@ -5,15 +5,15 @@
 version: 2
 defaults: &defaults
   docker: # run the steps with Docker
-    - image: circleci/php:7.1
+    - image: circleci/php:7.1-node-browsers
 
   environment:
-    COMPOSER_BIN: ~/repo/vendor/bin
-    # BLT_DIR: ~/repo/vendor/acquia/blt
-    BLT_DIR: ~/repo/.circleci/
-    BUILD_DIR: ~/repo
+    COMPOSER_BIN: ~/blt/vendor/bin
+    # BLT_DIR: ~/blt/vendor/acquia/blt
+    BLT_DIR: ~/blt/.circleci/
+    BUILD_DIR: ~/blt
 
-  working_directory: ~/repo
+  working_directory: ~/blt
 
 jobs:
   before_install:
