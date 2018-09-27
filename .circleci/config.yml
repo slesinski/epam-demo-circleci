@@ -20,7 +20,10 @@ jobs:
     <<: *defaults
     steps:
       - checkout
-      - run: phpenv config-rm xdebug.ini
+      - run:
+          name: Disable xdebug
+          command: |
+            sudo sed -i 's/^zend_extension/;zend_extension/g' /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
       - run: composer self-update
       - run: composer validate --no-check-all --ansi
       - run: composer install
