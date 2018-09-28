@@ -2,11 +2,6 @@
 
 set -ev
 
-# Allow MySQL to finish starting.
-sleep 3
-
-export PATH=${COMPOSER_BIN}:$PATH
-
 # Create fake mailer.
 echo -e 'max_execution_time = 120' | sudo tee /usr/local/etc/php/php.ini
 echo -e 'sendmail_path = /bin/true' | sudo tee /usr/local/etc/php/php.ini

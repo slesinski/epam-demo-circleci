@@ -12,10 +12,10 @@ jobs:
           MYSQL_HOST: 127.0.0.1
     working_directory: ~/blt
     environment:
+      BASH_ENV: ~/.bashrc
+      BLT_DIR: ~/blt/.circleci
       COMPOSER_BIN: ~/blt/vendor/bin
       # BLT_DIR: ~/blt/vendor/acquia/blt
-      BLT_DIR: ~/blt/.circleci
-      BUILD_DIR: ~/blt
 
     steps:
       - checkout
@@ -32,7 +32,6 @@ jobs:
             sudo apt install -y  libbz2-dev
             sudo apt install -y  mariadb-server
 
-
       - run:
           name: Install PHP Extensions
           command: |
@@ -40,11 +39,15 @@ jobs:
             sudo docker-php-ext-install bz2
 
       - run:
-          name: Install PHP Extensions
+          name: Composer Installs
           command: |
-            composer self-update 
+            composer self-update
             composer validate --no-check-all --ansi
             composer install
+
+      - run:
+          name: Export composer bins
+          command: echo 'export PATH=${COMPOSER_BIN}:$PATH' >> $BASH_ENV
 
       - run:
           name: Setup Environment
