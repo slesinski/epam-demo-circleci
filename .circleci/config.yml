@@ -12,9 +12,9 @@ jobs:
           MYSQL_HOST: 127.0.0.1
     working_directory: ~/blt
     environment:
-      BASH_ENV: ~/.bashrc
-      BLT_DIR: ~/blt/.circleci
-      COMPOSER_BIN: ~/blt/vendor/bin
+      BASH_ENV: /home/circleci/.bashrc
+      BLT_DIR: /home/circleci/blt/.circleci
+      COMPOSER_BIN: /home/circleci/blt/vendor/bin
       # BLT_DIR: ~/blt/vendor/acquia/blt
 
     steps:
