@@ -23,18 +23,11 @@ git config --global user.name "Circle-CI"
 git config --global user.email "noreply@circleci.com"
 
 # Create MySQL DB.
-mysql -u root -e "CREATE DATABASE drupal; CREATE USER 'drupal'@'localhost' IDENTIFIED BY 'drupal'; GRANT ALL ON drupal.* TO 'drupal'@'localhost';"
+sudo mysql -u root -e "CREATE DATABASE drupal; CREATE USER 'drupal'@'localhost' IDENTIFIED BY 'drupal'; GRANT ALL ON drupal.* TO 'drupal'@'localhost';"
 
 # Clear drush release history cache, to pick up new releases.
 rm -f ~/.drush/cache/download/*---updates.drupal.org-release-history-*
 # Verify that no git diffs (caused by line ending variation) exist.
 # - git diff --exit-code
-
-# sudo apt-get install xvfb
-export DISPLAY=:99.0
-sh -e /etc/init.d/xvfb start
-
-# Installs chromedriver to vendor/bin.
-~/blt/vendor/acquia/blt/scripts/linux/install-chrome.sh ${COMPOSER_BIN}
 
 set +v

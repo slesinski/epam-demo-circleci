@@ -7,6 +7,9 @@ jobs:
   build:
     docker: # run the steps with Docker
       - image: circleci/php:7.1
+        environment:
+          MYSQL_ROOT_PASSWORD: password
+          MYSQL_HOST: 127.0.0.1
     working_directory: ~/blt
     environment:
       COMPOSER_BIN: ~/blt/vendor/bin
@@ -23,15 +26,25 @@ jobs:
 
       - run:
           name: Install missing packages
-          command: sudo apt-get update &&  sudo apt-get install -y libpng-dev libbz2-dev mariadb-server
+          command: |
+            sudo apt update
+            sudo apt install -y libpng-dev
+            sudo apt install -y  libbz2-dev
+            sudo apt install -y  mariadb-server
 
 
       - run:
           name: Install PHP Extensions
-          command: sudo docker-php-ext-install gd && sudo docker-php-ext-install bz2
+          command: |
+            sudo docker-php-ext-install gd
+            sudo docker-php-ext-install bz2
 
-      - run: composer self-update && composer validate --no-check-all --ansi
-      - run: composer install
+      - run:
+          name: Install PHP Extensions
+          command: |
+            composer self-update 
+            composer validate --no-check-all --ansi
+            composer install
 
       - run:
           name: Setup Environment
