@@ -3,21 +3,17 @@
 # Check https://circleci.com/docs/2.0/language-php/ for more details
 #
 version: 2
-defaults: &defaults
-  docker: # run the steps with Docker
-    - image: circleci/php:7.1
-
-  environment:
-    COMPOSER_BIN: ~/blt/vendor/bin
-    # BLT_DIR: ~/blt/vendor/acquia/blt
-    BLT_DIR: ~/blt/.circleci
-    BUILD_DIR: ~/blt
-
-  working_directory: ~/blt
-
 jobs:
-  before_install:
-    <<: *defaults
+  build:
+    docker: # run the steps with Docker
+      - image: circleci/php:7.1
+    working_directory: ~/blt
+    environment:
+      COMPOSER_BIN: ~/blt/vendor/bin
+      # BLT_DIR: ~/blt/vendor/acquia/blt
+      BLT_DIR: ~/blt/.circleci
+      BUILD_DIR: ~/blt
+
     steps:
       - checkout
       - run:
@@ -29,42 +25,13 @@ jobs:
       - run:
           name: Install PHP Extensions
           command: sudo docker-php-ext-install gd && sudo docker-php-ext-install bz2
-      - run: composer self-update
-      - run: composer validate --no-check-all --ansi
+      - run: composer self-update && composer validate --no-check-all --ansi
       - run: composer install
 
-  install:
-    <<: *defaults
-    steps:
+
       - run: source ${BLT_DIR}/scripts/circleci/setup_environment
       - run: source ${BLT_DIR}/scripts/circleci/setup_project
 
-  script:
-    <<: *defaults
-    steps:
       - run: source ${BLT_DIR}/scripts/circleci/run_tests
 
-  deploy:
-    <<: *defaults
-    steps:
       - run: source ${BLT_DIR}/scripts/circleci/deploys
-
-workflows:
-  version: 2
-  build_tests:
-    jobs:
-      - before_install
-      - install:
-          requires:
-            - before_install
-      - script:
-          requires:
-            - install
-      - deploy:
-          requires:
-            - script
-          filters:
-            branches:
-              only:
-                - master
-                - develop
