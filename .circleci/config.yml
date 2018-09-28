@@ -23,7 +23,8 @@ jobs:
 
       - run:
           name: Install missing packages
-          command: sudo apt-get update &&  sudo apt-get install -y libpng-dev libbz2-dev
+          command: sudo apt-get update &&  sudo apt-get install -y libpng-dev libbz2-dev mariadb-server
+
 
       - run:
           name: Install PHP Extensions
