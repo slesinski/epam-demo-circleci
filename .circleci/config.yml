@@ -10,7 +10,7 @@ defaults: &defaults
   environment:
     COMPOSER_BIN: ~/blt/vendor/bin
     # BLT_DIR: ~/blt/vendor/acquia/blt
-    BLT_DIR: ~/blt/.circleci/
+    BLT_DIR: ~/blt/.circleci
     BUILD_DIR: ~/blt
 
   working_directory: ~/blt
@@ -25,12 +25,11 @@ jobs:
           command: |
             sudo sed -i 's/^zend_extension/;zend_extension/g' /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
       - run: sudo apt-get update &&  sudo apt-get install -y libpng-dev libbz2-dev
-
       - run:
-          name: Install PHP GD Extention
+          name: Install PHP GD Extension
           command: sudo docker-php-ext-install gd
       - run:
-          name: Install PHP bz2 Extention
+          name: Install PHP bz2 Extension
           command: sudo docker-php-ext-install bz2
       - run: composer self-update
       - run: composer validate --no-check-all --ansi
