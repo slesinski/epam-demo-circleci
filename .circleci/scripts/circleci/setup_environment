@@ -22,6 +22,9 @@ echo -e "memory_limit=512M" | sudo tee /usr/local/etc/php/php.ini
 git config --global user.name "Circle-CI"
 git config --global user.email "noreply@circleci.com"
 
+# Start and init MySQ.
+sudo service mysql start
+
 # Create MySQL DB.
 sudo mysql -u root -e "CREATE DATABASE drupal; CREATE USER 'drupal'@'localhost' IDENTIFIED BY 'drupal'; GRANT ALL ON drupal.* TO 'drupal'@'localhost';"
 
