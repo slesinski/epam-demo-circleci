@@ -1,8 +1,6 @@
 #!/usr/bin/env bash
 
 set -ev
-# @todo: Why are bins not loading into path?
-source /home/circleci/.bashrc
 
 blt validate:all --no-interaction
 ./vendor/acquia/blt/scripts/blt/ci/tick-tock.sh blt setup --define drush.alias='${drush.aliases.ci}' --environment=ci --no-interaction --yes --verbose
