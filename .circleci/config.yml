@@ -34,16 +34,16 @@ jobs:
 
       - run:
           name: Setup Environment
-          command: source $BLT_DIR/scripts/circleci/setup_environment
+          command: source ./.circleci/scripts/circleci/setup_environment
 
       - run:
           name: Setup Project
-          command: source $BLT_DIR/scripts/circleci/setup_project
+          command: source ./.circleci/scripts/circleci/setup_project
 
       - run:
           name: Run Tests
-          command: source $BLT_DIR/scripts/circleci/run_tests
+          command: source ./.circleci/scripts/circleci/run_tests
 
       - run:
           name: Deploys
-          command: source $BLT_DIR/scripts/circleci/deploys
+          command: source ./.circleci/scripts/circleci/deploys
