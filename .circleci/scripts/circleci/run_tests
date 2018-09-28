@@ -2,7 +2,7 @@
 
 set -ev
 
-cat /home/circleci/.bashrc
+sleep 1
 
 blt validate:all --no-interaction
 ./vendor/acquia/blt/scripts/blt/ci/tick-tock.sh blt setup --define drush.alias='${drush.aliases.ci}' --environment=ci --no-interaction --yes --verbose
