@@ -33,17 +33,17 @@ jobs:
       - run: composer install
 
       - run:
-        name: Setup Environment
-        command: source ${BLT_DIR}/scripts/circleci/setup_environment
+          name: Setup Environment
+          command: sh ${BLT_DIR}/scripts/circleci/setup_environment
 
       - run:
-        name: Seetup Project
-        command: source ${BLT_DIR}/scripts/circleci/setup_project
+          name: Seetup Project
+          command: sh ${BLT_DIR}/scripts/circleci/setup_project
 
       - run:
-        name: Run Tests
-        command: source ${BLT_DIR}/scripts/circleci/run_tests
+          name: Run Tests
+          command: sh ${BLT_DIR}/scripts/circleci/run_tests
 
       - run:
-        name: Deploys
-        command: source ${BLT_DIR}/scripts/circleci/deploys
+          name: Deploys
+          command: sh ${BLT_DIR}/scripts/circleci/deploys
