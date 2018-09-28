@@ -50,11 +50,6 @@ jobs:
           command: source ./.circleci/scripts/circleci/setup_environment
 
       - run:
-          name: Export composer bins
-          command: |
-            echo 'export PATH="${COMPOSER_BIN}:$PATH"' >> $BASH_ENV
-
-      - run:
           name: Setup Project
           command: source ./.circleci/scripts/circleci/setup_project
 

@@ -4,8 +4,8 @@ set -ev
 
 sleep 1
 
-blt validate:all --no-interaction
-./vendor/acquia/blt/scripts/blt/ci/tick-tock.sh blt setup --define drush.alias='${drush.aliases.ci}' --environment=ci --no-interaction --yes --verbose
-blt tests:all --define drush.alias='${drush.aliases.ci}' --define tests.run-server=true --environment=ci --yes --verbose
+/home/circleci/blt/vendor/bin/blt validate:all --no-interaction
+./vendor/acquia/blt/scripts/blt/ci/tick-tock.sh /home/circleci/blt/vendor/bin/blt setup --define drush.alias='${drush.aliases.ci}' --environment=ci --no-interaction --yes --verbose
+/home/circleci/blt/vendor/bin/blt tests:all --define drush.alias='${drush.aliases.ci}' --define tests.run-server=true --environment=ci --yes --verbose
 
 set +v
